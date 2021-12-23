@@ -190,6 +190,11 @@ stages:
 
           - checkout: templates
 
+          - bash: |
+              echo '##vso[Build.UpdateBuildNumber]${{ variables.docker_image_tag }}'
+            condition: eq(variables['Build.Reason'], 'ResourceTrigger')
+            displayName: 'Build trigger by the core parent module'
+
           # Updates the build number in Azure DevOps (requires refresh in the UI to see)
           - bash: |
               echo '##vso[Build.UpdateBuildNumber]${{ variables.docker_image_tag }}'
